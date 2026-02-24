@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>한페이지 | 갤러리</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            font-family: 'Noto Sans KR', sans-serif;
+            scroll-behavior: smooth;
+        }
+        .hero-gradient {
+            background: radial-gradient(circle at 50% 50%, rgba(59, 130, 246, 0.08) 0%, rgba(255, 255, 255, 1) 100%);
+        }
+        .gallery-item:hover .overlay {
+            opacity: 1;
+        }
+        .img-placeholder {
+            background-color: #f1f5f9;
+            position: relative;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.95);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .modal.active {
+            display: flex;
+        }
+        .main-video-shadow {
+            box-shadow: 0 25px 50px -12px rgba(59, 130, 246, 0.25);
+        }
+    </style>
+</head>
+<body class="bg-white text-slate-800">
+
+    <!-- 상단 네비게이션 -->
+    <header class="fixed w-full top-0 z-50 bg-white/80 backdrop-blur-md border-b border-slate-100">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <div class="flex items-center space-x-2">
+                <div class="w-8 h-8 bg-blue-600 rounded-lg flex items-center justify-center">
+                    <span class="text-white font-bold">1</span>
+                </div>
+                <!-- ONEPAGE를 한페이지로 수정 -->
+                <h1 class="text-xl font-bold tracking-tight text-slate-900">한페이지 <span class="text-blue-600">GALLERY</span></h1>
+            </div>
+            
+            <div class="flex items-center gap-8">
+                <nav class="hidden md:flex space-x-8 text-sm font-medium border-r border-slate-100 pr-8">
+                    <a href="#main-feature" class="text-slate-600 hover:text-blue-600 transition-colors">대표영상</a>
+                    <a href="#video-category" class="text-slate-600 hover:text-blue-600 transition-colors">교육영상</a>
+                    <a href="#image-category" class="text-slate-600 hover:text-blue-600 transition-colors">활동사진</a>
+                </nav>
+                <a href="index.html" class="flex items-center gap-1.5 text-sm font-bold text-slate-600 hover:text-blue-600 transition-all group">
+                    <i data-lucide="home" class="w-4 h-4 opacity-70 group-hover:opacity-100 transition-opacity"></i>
+                    홈으로
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <!-- 히어로 섹션 -->
+    <section class="pt-40 pb-12 hero-gradient text-center">
+        <div class="max-w-4xl mx-auto px-6">
+            <span class="inline-block px-4 py-1.5 mb-6 text-xs font-bold tracking-widest text-blue-600 uppercase bg-blue-50 rounded-full">Promotion Archive</span>
+            <h2 class="text-3xl md:text-5xl font-extrabold mb-6 text-slate-900 leading-tight">
+                한페이지의 <span class="text-blue-600">교육 </span> 궁금하시죠?<br/>
+                영상과 사진으로 만나보세요
+            </h2>
+        </div>
+    </section>
+
+    <!-- 대표 영상 섹션 -->
+    <section id="main-feature" class="pb-24 px-6 max-w-7xl mx-auto">
+        <div class="relative rounded-[2rem] overflow-hidden main-video-shadow bg-slate-900 group aspect-video md:aspect-[21/9]">
+            
+            <!-- 메인 영상 배경 자동 재생 -->
+            <video class="absolute inset-0 w-full h-full object-cover opacity-60" 
+                   src="https://c4b060e3ixlqwppf.public.blob.vercel-storage.com/%ED%95%9C%ED%8E%98%EC%9D%B4%EC%A7%80%20%EC%BA%90%EB%A6%AD%ED%84%B0%20%EC%86%8C%EA%B0%9C%20%EC%98%81%EC%83%81.mp4" 
+                   autoplay muted loop playsinline></video>
+            
+            <div class="absolute inset-0 flex flex-col items-center justify-center text-white text-center p-6 bg-black/30">
+                <h3 class="text-2xl md:text-4xl font-bold mb-4 text-white">한페이지 회사 소개</h3>
+                
+                <!-- 클릭 시 모달 재생 -->
+                <button onclick="openModal('video', 'https://c4b060e3ixlqwppf.public.blob.vercel-storage.com/%ED%95%9C%ED%8E%98%EC%9D%B4%EC%A7%80%20%EC%BA%90%EB%A6%AD%ED%84%B0%20%EC%86%8C%EA%B0%9C%20%EC%98%81%EC%83%81.mp4')" 
+                        class="w-16 h-16 md:w-20 md:h-20 bg-blue-600 rounded-full flex items-center justify-center hover:scale-110 transition-transform shadow-xl cursor-pointer z-10">
+                    <i data-lucide="play" class="w-8 h-8 fill-current ml-1 text-white"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- 교육 영상 카테고리 -->
+    <section id="video-category" class="py-20 bg-slate-50">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center space-x-3 mb-12">
+                <div class="w-10 h-10 bg-blue-600 text-white rounded-xl flex items-center justify-center shadow-lg shadow-blue-200">
+                    <i data-lucide="video" class="w-5 h-5"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-900">현장 스케치 및 교육 영상</h3>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                
+                <!-- 영상 1 -->
+                <div class="gallery-item relative overflow-hidden rounded-2xl cursor-pointer group bg-slate-200 img-placeholder" 
+                     onclick="openModal('video', 'https://c4b060e3ixlqwppf.public.blob.vercel-storage.com/%ED%95%9C%ED%8E%98%EC%9D%B4%EC%A7%80_%EB%A0%88%ED%81%AC%EB%A6%AC%EC%97%90%EC%9D%B4%EC%85%98_1.mp4')">
+                    <video class="w-full h-64 object-cover" muted loop onmouseover="this.play()" onmouseout="this.pause();this.currentTime=0;" playsinline>
+                        <source src="https://c4b060e3ixlqwppf.public.blob.vercel-storage.com/%ED%95%9C%ED%8E%98%EC%9D%B4%EC%A7%80_%EB%A0%88%ED%81%AC%EB%A6%AC%EC%97%90%EC%9D%B4%EC%85%98.mov" type="video/mp4">
+                    </video>
+                    <div class="absolute inset-0 bg-black/20 flex items-center justify-center pointer-events-none">
+                        <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white">
+                            <i data-lucide="play" class="w-6 h-6 fill-current"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
+                        <p class="text-white font-bold">한페이지 레크리에이션</p>
+                    </div>
+                </div>
+
+                <!-- 영상 2 -->
+                <div class="gallery-item relative overflow-hidden rounded-2xl cursor-pointer group bg-slate-200 img-placeholder" 
+                     onclick="openModal('video', 'https://c4b060e3ixlqwppf.public.blob.vercel-storage.com/KakaoTalk_20251030_094331672.mp4')">
+                    <video class="w-full h-64 object-cover" muted loop onmouseover="this.play()" onmouseout="this.pause();this.currentTime=0;" playsinline>
+                        <source src="https://c4b060e3ixlqwppf.public.blob.vercel-storage.com/KakaoTalk_20251030_094331672.mp4" type="video/mp4">
+                    </video>
+                    <div class="absolute inset-0 bg-black/20 flex items-center justify-center pointer-events-none">
+                        <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white">
+                            <i data-lucide="play" class="w-6 h-6 fill-current"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
+                        <p class="text-white font-bold">교육 현장 스케치 1</p>
+                    </div>
+                </div>
+
+                <!-- 영상 3 -->
+                <div class="gallery-item relative overflow-hidden rounded-2xl cursor-pointer group bg-slate-200 img-placeholder" 
+                     onclick="openModal('video', 'https://c4b060e3ixlqwppf.public.blob.vercel-storage.com/KakaoTalk_20251030_093558490.mp4')">
+                    <video class="w-full h-64 object-cover" muted loop onmouseover="this.play()" onmouseout="this.pause();this.currentTime=0;" playsinline>
+                        <source src="https://c4b060e3ixlqwppf.public.blob.vercel-storage.com/KakaoTalk_20251030_093558490.mp4" type="video/mp4">
+                    </video>
+                    <div class="absolute inset-0 bg-black/20 flex items-center justify-center pointer-events-none">
+                        <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white">
+                            <i data-lucide="play" class="w-6 h-6 fill-current"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
+                        <p class="text-white font-bold">교육 현장 스케치 2</p>
+                    </div>
+                </div>
+
+                <!-- 영상 4 -->
+                <div class="gallery-item relative overflow-hidden rounded-2xl cursor-pointer group bg-slate-200 img-placeholder" 
+                     onclick="openModal('video', 'https://c4b060e3ixlqwppf.public.blob.vercel-storage.com/KakaoTalk_20251030_092317382.mp4')">
+                    <video class="w-full h-64 object-cover" muted loop onmouseover="this.play()" onmouseout="this.pause();this.currentTime=0;" playsinline>
+                        <source src="https://c4b060e3ixlqwppf.public.blob.vercel-storage.com/KakaoTalk_20251030_092317382.mp4" type="video/mp4">
+                    </video>
+                    <div class="absolute inset-0 bg-black/20 flex items-center justify-center pointer-events-none">
+                        <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white">
+                            <i data-lucide="play" class="w-6 h-6 fill-current"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
+                        <p class="text-white font-bold">교육 현장 스케치 3</p>
+                    </div>
+                </div>
+
+                <!-- 영상 5 -->
+                <div class="gallery-item relative overflow-hidden rounded-2xl cursor-pointer group bg-slate-200 img-placeholder" 
+                     onclick="openModal('video', 'https://c4b060e3ixlqwppf.public.blob.vercel-storage.com/KakaoTalk_20251030_092317330.mp4')">
+                    <video class="w-full h-64 object-cover" muted loop onmouseover="this.play()" onmouseout="this.pause();this.currentTime=0;" playsinline>
+                        <source src="https://c4b060e3ixlqwppf.public.blob.vercel-storage.com/KakaoTalk_20251030_092317330.mp4" type="video/mp4">
+                    </video>
+                    <div class="absolute inset-0 bg-black/20 flex items-center justify-center pointer-events-none">
+                        <div class="w-12 h-12 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white">
+                            <i data-lucide="play" class="w-6 h-6 fill-current"></i>
+                        </div>
+                    </div>
+                    <div class="absolute bottom-0 left-0 right-0 p-5 bg-gradient-to-t from-black/80 to-transparent pointer-events-none">
+                        <p class="text-white font-bold">교육 현장 스케치 4</p>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- 활동 사진 카테고리 -->
+    <section id="image-category" class="py-24">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex items-center space-x-3 mb-12">
+                <div class="w-10 h-10 bg-sky-500 text-white rounded-xl flex items-center justify-center shadow-lg shadow-sky-200">
+                    <i data-lucide="camera" class="w-5 h-5"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-slate-900">활동 스틸컷 및 갤러리</h3>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="image-grid"></div>
+        </div>
+    </section>
+
+    <!-- 팝업 모달 -->
+    <div id="lightbox" class="modal px-4" onclick="closeModal()">
+        <!-- 닫기 버튼 -->
+        <button class="absolute top-6 right-6 text-white hover:text-blue-400 transition-colors z-[1100]">
+            <i data-lucide="x" class="w-10 h-10"></i>
+        </button>
+        
+        <div class="max-w-5xl w-full flex flex-col justify-center items-center" onclick="event.stopPropagation()">
+            <!-- 확대 이미지 컨테이너 -->
+            <img id="modalImg" class="hidden max-h-[85vh] rounded-lg shadow-2xl border-4 border-white/10" src="" alt="확대 이미지">
+            
+            <!-- 표준 동영상 컨테이너 (video 태그 사용) -->
+            <video id="modalVid" class="hidden w-full aspect-video rounded-lg shadow-2xl border-4 border-white/10 bg-black" controls controlsList="nodownload">
+                <source src="" type="video/mp4">
+                브라우저가 동영상을 지원하지 않습니다.
+            </video>
+
+            <!-- 구글 드라이브용 iframe 컨테이너 (레거시 지원용) -->
+            <div id="videoContainer" class="hidden relative w-full aspect-video rounded-lg shadow-2xl border-4 border-white/10 bg-black overflow-hidden">
+                <iframe id="modalFrame" 
+                        class="w-full h-full" 
+                        src="" 
+                        frameborder="0" 
+                        allow="autoplay; fullscreen; encrypted-media; picture-in-picture" 
+                        allowfullscreen></iframe>
+            </div>
+        </div>
+    </div>
+
+    <footer class="py-16 border-t border-slate-100 text-center bg-white">
+        <div class="max-w-7xl mx-auto px-6 text-xs text-slate-400 font-medium">
+            © 2024 ONEPAGE COMPANY. All rights reserved.
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+
+        // 이미지 ID 리스트 (구글 드라이브)
+        const imageIds = [
+            '1EDKs3Z8uc1gC0YZpEtPBSQbx_sK9FjId',
+            '1MZu_UC36LyoQVe7QkzOc8SeWsXFV_hLB',
+            '1i22PzLxNaHj7OWyY_WoLUYOPxbXJ-0yY', 
+            '1y2xE6x-H9ITWi9-VCw7dLeVljVC8eFpi',
+            '1-UE_qAZX4lGpqCSGHpbezl1m59-u6QZV',
+            '1OZJA-ue0p88SDixag5B15dwUAMRh5iIX',
+            '1yABicHr9aq37RRX_cVsaq7yeZgEStQ14'
+        ];
+
+        const grid = document.getElementById('image-grid');
+        imageIds.forEach(id => {
+            const div = document.createElement('div');
+            div.className = "gallery-item relative aspect-square overflow-hidden rounded-xl cursor-pointer group img-placeholder";
+            div.onclick = () => openModal('image', id);
+            div.innerHTML = `
+                <img src="https://lh3.googleusercontent.com/d/${id}=w600" 
+                     alt="현장사진" 
+                     class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                     onload="this.parentElement.classList.remove('img-placeholder')"
+                     onerror="this.src='https://picsum.photos/600/600?text=Error'">
+                <div class="overlay absolute inset-0 bg-blue-600/40 opacity-0 transition-opacity flex items-center justify-center">
+                    <i data-lucide="zoom-in" class="text-white w-8 h-8"></i>
+                </div>`;
+            grid.appendChild(div);
+        });
+
+        lucide.createIcons();
+
+        function extractDriveId(url) {
+            if (!url.includes('drive.google.com')) return url;
+            const parts = url.match(/\/d\/(.+?)(\/|$|\?)/);
+            if (parts && parts[1]) return parts[1];
+            const idParam = url.match(/[?&]id=(.+?)(&|$)/);
+            if (idParam && idParam[1]) return idParam[1];
+            return url;
+        }
+
+        function openModal(type, target) {
+            const modal = document.getElementById('lightbox');
+            const modalImg = document.getElementById('modalImg');
+            const modalVid = document.getElementById('modalVid');
+            const videoContainer = document.getElementById('videoContainer'); // iframe용 컨테이너
+            const modalFrame = document.getElementById('modalFrame');
+
+            // 초기화
+            modalImg.classList.add('hidden');
+            modalVid.classList.add('hidden');
+            videoContainer.classList.add('hidden');
+            modalVid.pause();
+            modalVid.src = "";
+            modalFrame.src = "";
+            
+            if (type === 'image') {
+                const id = extractDriveId(target);
+                // 구글 드라이브 ID면 lh3 사용
+                if(target.includes('drive.google.com') || (target.length > 20 && !target.includes('http'))) {
+                    modalImg.src = `https://lh3.googleusercontent.com/d/${id}=w1600`;
+                } else {
+                    modalImg.src = target;
+                }
+                modalImg.classList.remove('hidden');
+            } else if (type === 'video') {
+                // 구글 드라이브 링크가 들어오면 기존 방식(iframe) 유지
+                if (target.includes('drive.google.com')) {
+                    const id = extractDriveId(target);
+                    modalFrame.src = `https://drive.google.com/file/d/${id}/preview?autoplay=1`;
+                    videoContainer.classList.remove('hidden');
+                } else {
+                    // 직접 링크(.mp4 등)인 경우 표준 플레이어 사용
+                    modalVid.src = target;
+                    modalVid.classList.remove('hidden');
+                    modalVid.play();
+                }
+            }
+
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('lightbox');
+            const modalVid = document.getElementById('modalVid');
+            const modalFrame = document.getElementById('modalFrame');
+            
+            modalVid.pause();
+            modalVid.src = "";
+            modalFrame.src = ""; 
+            
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') closeModal();
+        });
+    </script>
+</body>
+</html>
